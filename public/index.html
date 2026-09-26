@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ParcelCheck — Damaged parcel, structured claim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="/">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg>
+      </span>
+      <span class="logo-name">Parcel<span>Check</span></a>
+    <span class="header-tag">damage-claim builder &middot; full-stack</span>
+    <div class="header-right">
+      <span class="mode-badge" id="mode-badge"><span class="dot"></span><span id="mode-badge-text">CONNECTING…</span></span>
+      <button class="btn-ghost" id="btn-settings">Server</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero fade-up">
+  <div class="hero-eyebrow">Parcel arrives damaged? Evidence in, claim out.</div>
+  <h1>Turn a <em>messy damaged parcel</em> into a structured, ready-to-send claim.</h1>
+  <p class="lead">Snap photos, describe the damage in your own words — by voice or text — and add your order details. ParcelCheck's AI pipeline assembles everything into one damage report you can review, save and submit.</p>
+  <div class="hero-meta">
+    <div class="m"><b>3</b><span>evidence types<br>(photos &middot; voice &middot; invoice)</span></div>
+    <div class="m"><b>1</b><span>structured damage<br>report</span></div>
+    <div class="m"><b>0</b><span>times you re-explain<br>the problem</span></div>
+  </div>
+</section>
+
+<nav class="stepper" aria-label="progress">
+  <div class="step active" id="step-ind-1"><span class="n">1</span><span class="t">Evidence in</span></div>
+  <div class="step" id="step-ind-2"><span class="n">2</span><span class="t">AI pipeline</span></div>
+  <div class="step" id="step-ind-3"><span class="n">3</span><span class="t">Damage report</span></div>
+</nav>
+
+<main>
+
+  <!-- ============ STEP 1 : EVIDENCE ============ -->
+  <div class="section-label" id="lbl-evidence">
+    <span class="sdot" style="background:var(--accent)"></span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5"/></svg>
+    STEP 1 &middot; EVIDENCE IN
+  </div>
+  <h2>What happened? Give us the raw evidence.</h2>
+  <p class="sub">Anything you provide is enough — photos, a voice note, or just a typed line. Tap a photo to tag what it shows; tags sharpen the analysis.</p>
+
+  <div class="evidence-grid">
+
+    <!-- photos -->
+    <div class="card fade-up" style="animation-delay:.05s">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        Package photos
+      </h3>
+      <p class="hint">Outer box, damage close-ups, and the item inside if it got hurt.</p>
+      <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="upload photos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+        <b>Add photos</b>
+        <span>drag & drop, or click to browse</span>
+      </div>
+      <input type="file" id="photo-input" accept="image/*" multiple hidden>
+      <div class="photo-strip" id="photo-strip"></div>
+    </div>
+
+    <!-- voice -->
+    <div class="card fade-up" style="animation-delay:.12s">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><path d="M12 19v4"/><path d="M8 23h8"/></svg>
+        Describe it in your voice
+      </h3>
+      <p class="hint">Explain what happened like you'd tell a friend — any Indian language or mixed.</p>
+      <div class="rec-wrap">
+        <button class="rec-btn" id="rec-btn" aria-label="record voice note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="rec-icon"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><path d="M12 19v4"/><path d="M8 23h8"/></svg>
+        </button>
+        <div class="rec-info">
+          <div class="rec-timer" id="rec-timer">00:00</div>
+          <div class="rec-state" id="rec-state">Tap to record</div>
+        </div>
+        <select id="voice-lang" style="width:auto;font-size:12px">
+          <option value="auto">Auto-detect</option>
+          <option value="hi-IN">हिंदी</option>
+          <option value="en-IN">English</option>
+          <option value="ta-IN">தமிழ்</option>
+          <option value="te-IN">తెలుగు</option>
+          <option value="bn-IN">বাংলা</option>
+          <option value="mr-IN">मराठी</option>
+          <option value="gu-IN">ગુજરાતી</option>
+          <option value="kn-IN">ಕನ್ನಡ</option>
+          <option value="ml-IN">മലയാളം</option>
+          <option value="pa-IN">ਪੰਜਾਬੀ</option>
+        </select>
+      </div>
+      <div id="audio-holder" style="display:none"><audio id="audio-play" controls></audio></div>
+      <textarea id="voice-text" placeholder="…or type what happened. Whatever you say or write here feeds the report."></textarea>
+      <p class="mini-note" id="stt-note"></p>
+    </div>
+
+    <!-- order -->
+    <div class="card fade-up" style="animation-delay:.19s">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"/><path d="M16 8h-6a2 2 0 100 4h4a2 2 0 110 4H8"/><path d="M12 5.5v11"/></svg>
+        Order & invoice
+      </h3>
+      <p class="hint">From your order page or the packing slip — whatever you have handy.</p>
+      <div class="fgrid">
+        <div class="full"><label class="f" for="f-order">Order ID</label><input type="text" id="f-order" placeholder="e.g. OD429118735K"></div>
+        <div><label class="f" for="f-item">Item</label><input type="text" id="f-item" placeholder="e.g. Blender 750W"></div>
+        <div><label class="f" for="f-value">Item value (₹)</label><input type="number" id="f-value" min="0" placeholder="2899"></div>
+        <div><label class="f" for="f-market">Marketplace</label>
+          <select id="f-market"><option value="">—</option><option>Amazon</option><option>Flipkart</option><option>Myntra</option><option>Meesho</option><option>BigBasket</option><option>Other</option></select></div>
+        <div><label class="f" for="f-courier">Courier</label>
+          <select id="f-courier"><option value="">—</option><option>Blue Dart</option><option>Delhivery</option><option>Ecom Express</option><option>Ekart</option><option>XpressBees</option><option>Amazon Shipping</option><option>India Post</option><option>Other</option></select></div>
+        <div><label class="f" for="f-date">Delivered on</label><input type="date" id="f-date"></div>
+        <div><label class="f" for="f-name">Your name</label><input type="text" id="f-name" placeholder="Full name"></div>
+        <div class="full"><label class="f" for="f-contact">Contact (email / phone)</label><input type="text" id="f-contact" placeholder="For the claim header"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-bar fade-up">
+    <div class="grow" id="action-hint">Add at least one photo, voice note or typed description to run the pipeline.</div>
+    <button class="btn btn-secondary" id="btn-sample">Load sample claim</button>
+    <button class="btn btn-primary" id="btn-run" disabled>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Generate damage report
+    </button>
+  </div>
+
+  <!-- ============ STEP 2 : PIPELINE ============ -->
+  <div id="pipeline-section" style="display:none">
+    <div class="section-label" id="lbl-pipeline">
+      <span class="sdot" style="background:var(--sage)"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.2 4.2l2.8 2.8m10 10l2.8 2.8M1 12h4m14 0h4M4.2 19.8l2.8-2.8m10-10l2.8-2.8"/></svg>
+      STEP 2 &middot; PARCELCHECK PIPELINE
+    </div>
+    <h2>Sarvam AI models structure your evidence.</h2>
+    <p class="sub">Three specialist models work in sequence on the server: vision reads the photos, Saaras transcribes your voice, and Sarvam-105B assembles the structured claim.</p>
+
+    <div class="pipe-grid">
+      <div class="stage" id="stage-vision">
+        <div class="stage-head">
+          <div class="stage-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div><div class="stage-title">Sarvam Vision</div><div class="stage-model" id="vision-model-label">image understanding</div></div>
+          <span class="stage-status" id="st-vision"><span class="sdot"></span>IDLE</span>
+        </div>
+        <div class="stage-out" id="out-vision">Waiting for evidence…</div>
+      </div>
+      <div class="stage" id="stage-saaras">
+        <div class="stage-head">
+          <div class="stage-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><path d="M12 19v4"/><path d="M8 23h8"/></svg></div>
+          <div><div class="stage-title">Saaras</div><div class="stage-model">voice → text, 23 languages</div></div>
+          <span class="stage-status" id="st-saaras"><span class="sdot"></span>IDLE</span>
+        </div>
+        <div class="stage-out" id="out-saaras">Waiting for evidence…</div>
+      </div>
+      <div class="stage" id="stage-llm">
+        <div class="stage-head">
+          <div class="stage-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
+          <div><div class="stage-title">Sarvam-105B</div><div class="stage-model">understand + structure evidence</div></div>
+          <span class="stage-status" id="st-llm"><span class="sdot"></span>IDLE</span>
+        </div>
+        <div class="stage-out" id="out-llm">Waiting for evidence…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 3 : REPORT ============ -->
+  <div id="report-section">
+    <div class="section-label" id="lbl-report">
+      <span class="sdot" style="background:var(--rose)"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8m8 4H8m2-8L8 9"/></svg>
+      STEP 3 &middot; DAMAGE REPORT
+    </div>
+    <h2>Review, tweak, save, submit.</h2>
+    <p class="sub">Everything below is editable — the AI drafts, you approve. Save claims to the server, then copy the letter for seller chat and email.</p>
+
+    <div class="rep-head" id="rep-badges"></div>
+
+    <div class="rep-grid">
+      <div class="card">
+        <h3 style="margin-bottom:12px">Summary <span style="font-weight:400;font-size:12px;color:var(--text-faint)">(editable)</span></h3>
+        <div id="rep-summary" contenteditable="true" spellcheck="false"></div>
+        <div class="rep-actions">
+          <button class="btn btn-secondary" data-copy="summary">Copy summary</button>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-bottom:12px">Structured claim</h3>
+        <dl class="rep-kv" id="rep-kv"></dl>
+        <details class="raw"><summary>raw JSON ▾</summary><pre class="json-view" id="rep-json"></pre></details>
+        <div class="rep-actions">
+          <button class="btn btn-secondary" data-copy="json">Copy JSON</button>
+          <button class="btn btn-secondary" id="btn-download">Download .json</button>
+          <button class="btn btn-primary" id="btn-save-claim">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+            Save claim
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3 style="margin-bottom:12px">Ready-to-send claim letter</h3>
+      <div class="letter" id="rep-letter"></div>
+      <div class="rep-actions">
+        <button class="btn btn-primary" data-copy="letter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy letter
+        </button>
+        <span class="mini-note" style="margin:0">Paste into seller chat, email, or the marketplace's return form.</span>
+      </div>
+    </div>
+
+    <!-- saved claims -->
+    <div class="card claims-card">
+      <h3 style="margin-bottom:12px">Saved claims <span style="font-weight:400;font-size:12px;color:var(--text-faint)">(stored on the server)</span></h3>
+      <div class="claims-list" id="claims-list">
+        <div class="empty-note">No claims saved yet — generate a report and hit “Save claim”.</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  ParcelCheck full-stack prototype &middot; Express + Node backend, vanilla JS frontend &middot;
+  pipeline: <code>gemma4</code> &rarr; <code>saaras:v3</code> &rarr; <code>sarvam-105b</code> via api.sarvam.ai (server-side)<br>
+  Your Sarvam API key stays on the server. Claims persist in <code>data/claims.json</code>.
+</footer>
+
+<!-- server info modal -->
+<div class="modal-back" id="modal-back">
+  <div class="modal" role="dialog" aria-label="Server status">
+    <h3>Server status</h3>
+    <p class="m-sub" id="server-sub">Checking the backend…</p>
+    <div class="row" id="server-pipeline">
+      <label class="f" style="margin-bottom:8px">Pipeline</label>
+      <dl class="rep-kv" id="server-pipeline-kv"></dl>
+    </div>
+    <div class="row">
+      <p class="mini-note" style="margin:0">
+        <b>Go live:</b> the server runs in demo mode with simulated model output. Set <code>SARVAM_API_KEY</code>
+        in your environment (or in a <code>.env</code> file next to <code>server.js</code>) and restart — the
+        same UI then calls real Saaras, gemma4 image input and Sarvam-105B on api.sarvam.ai, with the key
+        kept server-side. Get a key at dashboard.sarvam.ai.
+      </p>
+    </div>
+    <div class="m-actions">
+      <button class="btn btn-primary" id="modal-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-zone"></div>
+
+<script src="/app.js" defer></script>
+</body>
+</html>
