@@ -1,0 +1,18 @@
+{
+  "name": "parcelcheck",
+  "version": "1.0.0",
+  "description": "Turn damaged-parcel evidence (photos, voice, invoice) into a structured, ready-to-send claim. Powered by the Sarvam AI stack.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "license": "MIT"
+}
